@@ -1,0 +1,70 @@
+# =============================================================================
+# PurpleMine2 Local Testing Environment
+# =============================================================================
+#
+# HOW TO USE:
+#
+# 1. Start the environment:
+#      docker compose up -d
+#    Wait ~30 seconds for Redmine to initialize the database and start.
+#
+# 2. Open Redmine:
+#      http://localhost:3000
+#    Log in with: admin / admin
+#
+# 3. Select the PurpleMine2 theme:
+#      Go to: Administration > Settings > Display tab
+#      Set "Theme" to "PurpleMine2"
+#      Click "Save"
+#
+# 4. Create test data (projects, issues, etc.):
+#      a) Go to: Administration > Projects > New project
+#         Fill in name (e.g. "Test Project"), identifier, and save.
+#      b) Go to: Projects > Test Project > New issue
+#         Create a few issues with different trackers/priorities.
+#      c) Alternatively, run the Redmine seed rake task:
+#           docker compose exec redmine rake redmine:load_default_data RAILS_ENV=production REDMINE_LANG=en
+#         This loads default roles, trackers, issue statuses, and enumerations.
+#
+# 5. Stop the environment:
+#      docker compose down
+#    Add -v to also remove the database volume:
+#      docker compose down -v
+#
+# =============================================================================
+
+services:
+  redmine:
+    image: redmine:6
+    ports:
+      - "3000:3000"
+    environment:
+      REDMINE_DB_POSTGRES: db
+      REDMINE_DB_PORT: 5432
+      REDMINE_DB_USERNAME: redmine
+      REDMINE_DB_PASSWORD: redmine
+      REDMINE_DB_DATABASE: redmine
+    volumes:
+      - .:/usr/src/redmine/public/themes/PurpleMine2:ro
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: redmine
+      POSTGRES_PASSWORD: redmine
+      POSTGRES_DB: redmine
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U redmine"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  pgdata:

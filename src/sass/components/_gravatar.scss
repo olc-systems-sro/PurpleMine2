@@ -1,7 +1,50 @@
 //
-// Gravatars
+// Gravatars and Avatars
 // --------------------------------------------------
 
+// Redmine 6.x: generic avatar styling (both img and initials)
+.avatar {
+  display: inline-flex;
+  border-radius: $border-radius-large;
+  vertical-align: middle;
+}
+
+// Redmine 6.x: initials-based avatars (span[role="img"].avatar)
+$avatar-sizes: 13, 16, 22, 24, 40, 50;
+
+span[role="img"].avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  user-select: none;
+
+  @each $size in $avatar-sizes {
+    &.s#{$size} {
+      block-size: #{$size}px;
+      inline-size: #{$size}px;
+      font-size: $size * .4px;
+    }
+  }
+
+  // Default color palette for initials avatars
+  &.avatar-color-0 { background: $red; color: $white; }
+  &.avatar-color-1 { background: $orange; color: $black; }
+  &.avatar-color-2 { background: $yellow; color: $black; }
+  &.avatar-color-3 { background: $green; color: $black; }
+  &.avatar-color-4 { background: $teal; color: $black; }
+  &.avatar-color-5 { background: $blue; color: $black; }
+  &.avatar-color-6 { background: $purple; color: $black; }
+  &.avatar-color-7 { background: $pink; color: $black; }
+}
+
+h2 .avatar:not(.gravatar),
+h3 .avatar:not(.gravatar) {
+  margin-right: .5em;
+  margin-bottom: .4em;
+}
+
+// Gravatar images
 img.gravatar {
   position: relative;
   top: -.15em;

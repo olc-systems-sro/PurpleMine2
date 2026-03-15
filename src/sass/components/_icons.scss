@@ -1086,3 +1086,99 @@ table.list th.checkbox > a {
     display: none;
   }
 }
+
+
+//== Redmine 6.x inline SVG icons
+//
+// Redmine 6.x uses inline SVG elements instead of CSS background-image icons.
+// Without explicit sizing, SVGs default to 300x150px.
+
+svg.icon-svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  stroke-width: 1.5;
+  stroke: $link-color;
+  fill: none;
+  vertical-align: middle;
+
+  &.s20 {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  &.s18 {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+
+  &.s16 {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  &.s14 {
+    width: .875rem;
+    height: .875rem;
+  }
+
+  &.s12 {
+    width: .75rem;
+    height: .75rem;
+  }
+}
+
+svg.icon-svg-filled {
+  stroke: none;
+  fill: $link-color;
+}
+
+svg.svg-loader {
+  transform-origin: center;
+  animation: spin 1s linear infinite;
+}
+
+.icon svg,
+.icon-only svg {
+  flex-shrink: 0;
+}
+
+.icon-error svg.icon-svg {
+  stroke: $brand-danger;
+}
+
+.icon-warning svg.icon-svg {
+  stroke: $brand-warning;
+}
+
+.icon-ok svg.icon-svg {
+  stroke: $brand-success;
+}
+
+a.icon:hover svg,
+a.icon-only:hover svg {
+  stroke: $link-hover-color;
+}
+
+span.icon-label {
+  margin-left: $padding-small-vertical;
+}
+
+// Redmine 6.x: when inline SVG icon is present, hide FontAwesome ::before
+// and reset padding. Must come after icon-map rules to win specificity.
+// stylelint-disable no-duplicate-selectors, declaration-no-important
+.icon,
+.icon-only {
+  &:has(svg) {
+    display: inline-flex !important;
+    align-items: center;
+    padding-left: 0 !important;
+    background-image: none;
+
+    &::before {
+      content: none !important;
+      display: none !important;
+    }
+  }
+}
+// stylelint-enable no-duplicate-selectors, declaration-no-important
+

@@ -18,10 +18,12 @@
     word-wrap: break-word;
 
     @if $use-gravatars {
-      // For Redmine 3.4+
+      // For Redmine 3.4+, Redmine 6.x adds .avatar-with-child and span[role="img"].avatar
+      .avatar-with-child,
       .gravatar-with-child {
         position: relative;
 
+        > span[role="img"].avatar,
         > img.gravatar {
           top: 0;
           width: $issue-gravatar-size;
@@ -61,6 +63,12 @@
       > .author {
         padding-left: $issue-gravatar-size * 1.1 + 10px;
       }
+
+      // Redmine 6.x: hide padding when gravatar has no image (initial avatars)
+      .gravatar-with-child:not(:has(img)) + .subject,
+      .gravatar-with-child:not(:has(img)) + .subject + .author {
+        padding-left: 0;
+      }
     }
 
     &.assigned-to-me {
@@ -69,6 +77,8 @@
       }
     }
 
+    // Redmine 6.x wraps subject in div[data-controller="sticky-issue-header"]
+    > div[data-controller="sticky-issue-header"] > .subject,
     > .subject {
       h3 {
         margin-bottom: .3em;
@@ -82,6 +92,15 @@
         margin-bottom: 5px;
         font-size: $font-size-small;
       }
+    }
+
+    // Redmine 6.x: emoji reactions on issues
+    > .reaction {
+      margin-top: -1em;
+      margin-left: 10px;
+      float: right;
+      clear: right;
+      font-size: .9em;
     }
 
     > .author {
@@ -297,6 +316,41 @@
   }
 }
 
+// Redmine 6.x: sticky header shown when scrolling down on issue page
+div#sticky-issue-header {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  right: 0;
+  left: 0;
+  align-items: center;
+  padding: $padding-large-vertical $padding-small-horizontal;
+  border-bottom: 1px solid $issue-border;
+  border-radius: 0;
+  background-color: $body-bg;
+  box-shadow: $toc-shadow;
+  font-size: $font-size-small;
+
+  &.is-visible {
+    display: flex;
+  }
+
+  .issue-heading {
+    flex-shrink: 0;
+    margin-right: calc(#{$font-size-base} / 2);
+    white-space: nowrap;
+  }
+
+  .subject {
+    flex-grow: 1;
+    overflow: hidden;
+    font-weight: $font-weight-bold;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
 div.fileover,
 p.custom-field-filedroplistner.fileover {
   background-color: $highlight-bg;
@@ -407,7 +461,8 @@ div.thumbnails {
   }
 }
 
-#trackers_description {
+#trackers_description,
+#issue_statuses_description {
   display: none;
 
   dt {
@@ -573,6 +628,13 @@ div.thumbnails {
     .journal-link {
       color: $gray-700;
     }
+
+    // Redmine 6.x: update info shown in journal header
+    .update-info {
+      font-size: .9em;
+      font-style: italic;
+      font-weight: 600;
+    }
   }
 
   @if $use-gravatars {
@@ -613,6 +675,16 @@ div.thumbnails {
         margin-left: -($bubble-gravatar-size + $bubble-gravatar-space + $bubble-padding-horizontal + 1px);
         float: left;
       }
+
+      // Redmine 6.x: journal avatar with span-based avatars
+      .journal-info {
+        margin-left: -($bubble-padding-horizontal + 14px);
+
+        > .gravatar,
+        > span[role="img"].avatar {
+          transform: translate3d(-$bubble-gravatar-size, -5px, 0);
+        }
+      }
     }
   }
 
@@ -627,7 +699,8 @@ div.thumbnails {
 
   form,
   .wiki,
-  .details {
+  .details,
+  .details + p {
     border-top: 1px solid $bubble-border;
   }
 
@@ -639,6 +712,16 @@ div.thumbnails {
 
     img {
       margin: 0 0 -3px 4px;
+    }
+
+    // Redmine 6.x: paragraph following details
+    + p {
+      margin: 0;
+      padding: $panel-body-padding-vertical $panel-body-padding-horizontal;
+
+      &:empty {
+        display: none;
+      }
     }
   }
 
@@ -730,6 +813,13 @@ div.thumbnails {
   margin: -3px -3px -3px 0;
   padding: 3px;
   float: right;
+}
+
+// Redmine 6.x: journal header uses flexbox layout
+.journals h4.journal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 span.private {
