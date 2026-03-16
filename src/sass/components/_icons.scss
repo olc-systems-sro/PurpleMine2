@@ -1093,38 +1093,38 @@ table.list th.checkbox > a {
 // Redmine 6.x uses inline SVG elements instead of CSS background-image icons.
 // Without explicit sizing, SVGs default to 300x150px.
 
-svg.icon-svg {
+svg.icon-svg,
+svg.s20,
+svg.s18,
+svg.s16,
+svg.s14,
+svg.s12 {
   width: 1.25rem;
   height: 1.25rem;
   stroke-width: 1.5;
   stroke: $link-color;
   fill: none;
   vertical-align: middle;
+}
 
-  &.s20 {
-    width: 1.25rem;
-    height: 1.25rem;
-  }
+svg.s18 {
+  width: 1.125rem;
+  height: 1.125rem;
+}
 
-  &.s18 {
-    width: 1.125rem;
-    height: 1.125rem;
-  }
+svg.s16 {
+  width: 1rem;
+  height: 1rem;
+}
 
-  &.s16 {
-    width: 1rem;
-    height: 1rem;
-  }
+svg.s14 {
+  width: .875rem;
+  height: .875rem;
+}
 
-  &.s14 {
-    width: .875rem;
-    height: .875rem;
-  }
-
-  &.s12 {
-    width: .75rem;
-    height: .75rem;
-  }
+svg.s12 {
+  width: .75rem;
+  height: .75rem;
 }
 
 svg.icon-svg-filled {
@@ -1140,6 +1140,9 @@ svg.svg-loader {
 .icon svg,
 .icon-only svg {
   flex-shrink: 0;
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
 }
 
 .icon-error svg.icon-svg {
