@@ -5,7 +5,7 @@
 // Redmine 6.x: generic avatar styling (both img and initials)
 .avatar {
   display: inline-flex;
-  border-radius: $border-radius-large;
+  border-radius: 50%;
   vertical-align: middle;
 }
 
@@ -29,13 +29,13 @@ span[role="img"].avatar {
 
   // Default color palette for initials avatars
   &.avatar-color-0 { background: $red; color: $white; }
-  &.avatar-color-1 { background: $orange; color: $black; }
+  &.avatar-color-1 { background: $orange; color: $white; }
   &.avatar-color-2 { background: $yellow; color: $black; }
-  &.avatar-color-3 { background: $green; color: $black; }
-  &.avatar-color-4 { background: $teal; color: $black; }
-  &.avatar-color-5 { background: $blue; color: $black; }
-  &.avatar-color-6 { background: $purple; color: $black; }
-  &.avatar-color-7 { background: $pink; color: $black; }
+  &.avatar-color-3 { background: $green; color: $white; }
+  &.avatar-color-4 { background: $teal; color: $white; }
+  &.avatar-color-5 { background: $blue; color: $white; }
+  &.avatar-color-6 { background: $purple; color: $white; }
+  &.avatar-color-7 { background: $pink; color: $white; }
 }
 
 h2 .avatar:not(.gravatar),

@@ -37,7 +37,7 @@ services:
   redmine:
     image: redmine:6
     ports:
-      - "3000:3000"
+      - "3001:3000"
     environment:
       REDMINE_DB_POSTGRES: db
       REDMINE_DB_PORT: 5432
@@ -46,6 +46,7 @@ services:
       REDMINE_DB_DATABASE: redmine
     volumes:
       - .:/usr/src/redmine/public/themes/PurpleMine2:ro
+      - .:/usr/src/redmine/app/assets/themes/PurpleMine2:ro
     depends_on:
       db:
         condition: service_healthy
