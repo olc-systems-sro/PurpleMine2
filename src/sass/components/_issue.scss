@@ -682,7 +682,10 @@ div.thumbnails {
 
         > .gravatar,
         > span[role="img"].avatar {
-          transform: translate3d(-$bubble-gravatar-size, -5px, 0);
+          position: relative;
+          top: -1px;
+          margin-right: 4px;
+          transform: translate3d(-$bubble-gravatar-size, 0, 0);
         }
       }
     }
@@ -820,6 +823,35 @@ div.thumbnails {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  .journal-info {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .journal-meta {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 2px;
+    margin-left: $padding-small-horizontal;
+
+    .journal-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .journal-link {
+      margin: 0;
+      padding: 0 0 0 4px;
+      float: none;
+      color: $gray-700;
+    }
+  }
 }
 
 span.private {

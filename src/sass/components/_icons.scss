@@ -1174,7 +1174,9 @@ span.icon-label {
   &:has(svg) {
     display: inline-flex !important;
     align-items: center;
+    width: auto !important;
     padding-left: 0 !important;
+    overflow: visible !important;
     background-image: none;
 
     &::before {
